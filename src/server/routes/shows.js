@@ -21,18 +21,18 @@ router.get('/shows', function(req, res, next) {
 //single route
 router.get('/show/:id', function(req, res, next) {
   // res.status(200).json('testing');
-  Shows().select(req.body.id).then(function(result){
+  Shows().select().where('id', req.params.id).then(function(result){
     res.status(200).json(result);
   });
 });
 
 //post request
 router.post('/shows', function(req, res, next){
-	// console.log(req.body)
+	var show = req.body
 	// console.log(res.body)
-	Shows().insert(req.body).then(function(result){
+	Shows().insert(req.body).returning('id').then(function(result){
+
     res.status(200).json(result);
   });
-	console.log(res.body)
 })
 module.exports = router;

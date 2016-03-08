@@ -55,12 +55,11 @@ describe('API routes', function() {
 
         it('should get one show', function(done) {
             chai.request(server)
-            .get('/api/show/3')
+            .get('/api/show/1')
             .end(function(err, res) {
                 res.should.have.status(200);
                 res.should.be.json;
                 res.body.should.be.a('array');
-                res.body.length.should.equal(4);
                 res.body[0].should.have.property('name');
                 res.body[0].name.should.equal('Suits');
                 res.body[0].should.have.property('channel');
@@ -87,15 +86,13 @@ describe('API routes', function() {
         rating: 1,
         explicit: false
     })
-        .end(function(err, res) {
-
+        .end(function(error, response) {
             chai.request(server)
-            .get('/api/show/' + res.body[0])
-            .end(function(error, response) {
+            .get('/api/show/' + response.body[0])
+            .end(function(err, res) {
                 res.should.have.status(200);
                 res.should.be.json;
                 res.body.should.be.a('array');
-                res.body.length.should.equal(4);
                 res.body[0].should.have.property('name');
                 res.body[0].name.should.equal('new show');
                 res.body[0].should.have.property('channel');
